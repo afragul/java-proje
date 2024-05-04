@@ -39,6 +39,17 @@ public class LinkedList {
         }
         return -1;
     }
+
+    public int size(){ // number of customers
+        int count=0;
+        Node1 position=head;
+        while(position!=null){
+            count ++;
+            position=position.link;
+
+        }
+        return count;
+    }
     public void printList(){
         Node1 position=head;
         while(position!=null){

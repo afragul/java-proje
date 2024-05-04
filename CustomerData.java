@@ -9,7 +9,7 @@ public class CustomerData{
     occupation="occupation not yet entered";
     }
     
-    public CustomerData(String name, String surname, String city, String country, String occupation){
+    public CustomerData(String name, String surname, String country, String city, String occupation){
     this.name=name;
     this.surname=surname;
     this.city=city;

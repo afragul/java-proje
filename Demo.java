@@ -21,7 +21,7 @@ public class Demo {
 
 
     public static void main(String[] args) {
-        int[][] puanMatrix= new int[20][20];
+
         System.out.println("------MENU-----");
         Scanner input= new Scanner(System.in);
         System.out.print("enter the number what do you want ");
