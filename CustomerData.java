@@ -46,7 +46,7 @@ public class CustomerData{
     public void setOccupation(String occupation) { this.occupation = occupation;}
     
     public String toString(){
-    return ("name: "+ name+ " surname: " +surname+" city and country: "+city+country+" occupation: "+occupation);
+    return ("name: "+ name+ " surname: " +surname+" city and country: "+city+ " " +country+" occupation: "+occupation);
     }
     
 }

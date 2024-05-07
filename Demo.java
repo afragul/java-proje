@@ -44,7 +44,8 @@ public class Demo {
 
                 CustomerData newCustomer=new CustomerData(customerDatas[1],customerDatas[2],customerDatas[3],customerDatas[4],customerDatas[5]);
                 customerList.add(newCustomer);//add to list
-                //linkedList.insertSort(customerID, newCustomer); //linked liste ekleme yapildi AMA BIR TERSLIK VAR BAKMAN LAZIM!!!!
+                linkedList.insertSort(customerID, newCustomer); //linked liste ekleme yapildi AMA BIR TERSLIK VAR BAKMAN LAZIM!!!!
+                linkedList.printList();
             
             }
             if (fileIn.hasNextLine()){
@@ -63,9 +64,7 @@ public class Demo {
             }else if (userChoice==2){
                 System.out.print("enter user id: ");
                 int keyboardID=input.nextInt();
-
                 puanMatrix[idQueue][0]=keyboardID;
-
                 System.out.print("enter user name: ");
                 String keyboardName=input2.nextLine();
                 System.out.print("enter user surname: ");
@@ -82,42 +81,49 @@ public class Demo {
                 //linkedList.insertSort(keyboardID, keyboardCustomer);//add to linked list
 
                 //statistics:
-                int[] sonuclar= new int[customerList.size()];
-                int mindeger=100;
-                int totalpuan=0; //eger birden cok benzeyen kisi cikarsa total puanini hesaplayacak
+                int[] results= new int[customerList.size()];
+                int minValue=100;
+                int totalminValue=0; // calculate the total score if there is more than one similar person
                 for(int i=1;i<numOfProduct;i++){
                     System.out.print("enter " + i + ". product's point: ");
                     int productPoint=input.nextInt();
                     puanMatrix[idQueue][i]=productPoint;
                 }
 
-                //BURDA BI SORUN VAR BURAYA BAKMAN LAZIM TOTAL SEYI YANLIS HESAPLIYOR total fark da yanlis hesaplaniyor tekrar bak
                 for(int i=0;i<customerList.size()-1;i++){
-                    int totalfark=0;
-                    for(int j=1;j<numOfProduct+1;j++){//her urun icin farklar bulunacak
-                        int fark=puanMatrix[i][j]-puanMatrix[idQueue][j];
+                    int totalDifference=0;
+                    for(int j=1;j<numOfProduct;j++){//points difference for each product
+                        int fark=0;
+                        fark=puanMatrix[i][j]-puanMatrix[idQueue][j];
                         if(fark<0){
                             fark=fark*(-1);
                         }
-                        totalfark=+fark;
-                    }
-                    sonuclar[i]=totalfark;
-                    System.out.println(totalfark);
+                        totalDifference=totalDifference+fark;
 
+                    }
+                    results[i]=totalDifference; 
                 }
 
-                for(int i=0;i<sonuclar.length-1;i++){
-                    if(mindeger>sonuclar[i]){
-                        mindeger=sonuclar[i];
+                for(int i=0;i<results.length-1;i++){
+                    if(minValue>results[i]){
+                        minValue=results[i];
+                        totalminValue=minValue;
+                    }else if(minValue==results[i]){
+                        totalminValue=(minValue+results[i])/2;
                     }
                 }
-                puanMatrix[idQueue][numOfProduct]=mindeger;
-                System.out.println("your point for last product probably will be: "+totalpuan);
-
+                puanMatrix[idQueue][numOfProduct]=totalminValue;
+                System.out.println("your point for last product probably will be: "+totalminValue);
                 idQueue++;
 
             }else if (userChoice==3){
-                // Her bir ürün için o ürüne ait ortalama derecelendirme puanını hesaplayarak yazdırma.
+                for(int i=1;i<numOfProduct+1;i++){ 
+                    int puanOfProduct=0; //total puan for every product
+                    for(int j=0;j<customerList.size();j++){
+                        puanOfProduct=puanOfProduct+puanMatrix[j][i];
+                    }
+                    System.out.println("total score of the "+(i+1)+". product: "+ puanOfProduct);
+                }
             }else if(userChoice==4){
                 //Her bir ürün için sadece ülkesi "Turkey" olan müşterileri dikkate alarak elde edilen ortalama derecelendirme puanını hesaplayarak yazdırma.
             }else if(userChoice==5){
@@ -127,7 +133,12 @@ public class Demo {
             }else if(userChoice==7){
                 //Müşteri bilgileri bağlı listesini baştan sonra ekrana yazdırma.
             }else if(userChoice==8){
-                //İki boyutlu diziyi ekrana yazdırma.
+                for (int row = 0; row < puanMatrix.length; row++) {
+                    for (int column = 0; column < puanMatrix[row].length; column++) {
+                        System.out.print(puanMatrix[row][column] + " "); 
+                    }
+                    System.out.println(); 
+                }
             }else if(userChoice==9){
                 System.out.println("system is exit");
                 System.exit(0);
