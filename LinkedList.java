@@ -1,59 +1,71 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class LinkedList {
     private Node1 head;
 
     public LinkedList(){
         head=null;
     }
-    public void insertSort(int customerNo, CustomerData customerData ){
+    public void insertSort(int customerNo, CustomerData customerData ){ //add to customers by id order
         Node1 newNode=new Node1(customerNo,customerData,head);
         if(head==null || head.customerNo>=customerNo){
             newNode.link=head;
             head=newNode;
+        }else{
+
+            Node1 current=head;
+            while(current.link!=null && current.link.customerNo<customerNo){
+                current=current.link;
+            }
+            newNode.link=current.link;
+            current.link=newNode;
         }
-        Node1 current=head;
-        while(current.link!=null && current.link.customerNo<customerNo){
-            current=current.link;
-        }
-        newNode.link=current.link;
-        current.link=newNode;
     }
-    //find customer from turkey 
-    public int findTurkey(String item){
+    
+    //find customers from turkey 
+    public List<Integer> findTurkey(String item){
+        List<Integer> turkishCustomer= new ArrayList<>();
         Node1 position= head;
         while(position!=null){
-            if(position.customerInfo.getName().equals(item)){
-                return position.customerNo;
+            if(position.customerInfo.getCountry().equals(item)){
+                turkishCustomer.add(position.customerNo);
             }
             position=position.link;
         }
-        return -1;
+        return turkishCustomer;
     }
+
+    //find non turkish custumers
+    public List<Integer> findOtherNations(){
+        List<Integer> nonTurkishCustomer= new ArrayList<>();
+        Node1 position= head;
+        while(position!=null){
+            if(!position.customerInfo.getCountry().equals("Turkey")){
+                nonTurkishCustomer.add(position.customerNo);
+            }
+            position=position.link;
+        }
+        return nonTurkishCustomer;
+    }
+
     //find doctor customer
-    public int findDoctor(String item){
+    public List<Integer> findDoctor(String item){
+        List<Integer> doctorCustomer= new ArrayList<>();
         Node1 position= head;
         while(position!=null){
             if(position.customerInfo.getOccupation().equals(item)){
-                return position.customerNo;
+                doctorCustomer.add(position.customerNo);
             }
             position=position.link;
         }
-        return -1;
+        return doctorCustomer;
     }
 
-    public int size(){ // number of customers
-        int count=0;
-        Node1 position=head;
-        while(position!=null){
-            count ++;
-            position=position.link;
-
-        }
-        return count;
-    }
     public void printList(){
         Node1 position=head;
         while(position!=null){
-            System.out.println(position.customerNo +" "+position.customerInfo);
+            System.out.println("customer no: "+position.customerNo +" "+position.customerInfo);
             position=position.link;
         }
     }
